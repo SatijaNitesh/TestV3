@@ -34,5 +34,28 @@
         <argument id="failureMessage"/>
       </arguments>
     </apiCall>
+    <apiCall apiId="com.provar.plugins.bundled.apis.control.SetValues" guid="51a97c12-3982-4ce5-a3b9-ea7d36c805a0" name="SetValues" testItemId="2" title="Set Values: Xml_value">
+      <arguments>
+        <argument id="values">
+          <value class="valueList" mutable="Mutable">
+            <namedValues mutable="Mutable">
+              <namedValue name="valuePath">
+                <value class="value" valueClass="string">Xml_value</value>
+              </namedValue>
+              <namedValue name="value">
+                <value class="funcCall" id="GetEnvironmentVariable">
+                  <argument id="variableName">
+                    <value class="value" valueClass="string">USERNAME</value>
+                  </argument>
+                </value>
+              </namedValue>
+              <namedValue name="valueScope">
+                <value class="value" valueClass="string">Test</value>
+              </namedValue>
+            </namedValues>
+          </value>
+        </argument>
+      </arguments>
+    </apiCall>
   </steps>
 </testCase>
