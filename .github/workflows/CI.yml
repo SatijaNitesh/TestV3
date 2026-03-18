@@ -42,7 +42,7 @@ jobs:
 
           # Run Provar Tests
           echo "PROVAR_HOME=$PROVAR_HOME"
-          cd $GITHUB_WORKSPACE/test/ANT
+          cd $GITHUB_WORKSPACE/ANT
           xvfb-run ant -f build.xml
 
       # Upload Results (Always)
