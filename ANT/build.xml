@@ -34,6 +34,7 @@
 				testEnvironmentSecretsPassword="${testenvironment.secretspassword}"
 				sendEmail="NO"
 				invokeTestRunMonitor="true"
+				licensePath=“../licenses”
 				>
 		
 			 <fileset id="testcases" dir="../tests"></fileset>
