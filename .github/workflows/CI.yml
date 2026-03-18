@@ -28,7 +28,7 @@ jobs:
           # Download Provar
           curl -O https://download.provartesting.com/latest_V3/Provar_ANT_latest_V3.zip
           unzip -o Provar_ANT_latest_V3.zip -d $PROVAR_HOME
-          rm Provar_ANT_latest.zip
+          rm Provar_ANT_latest_V3.zip
 
           # Update system
           sudo apt-get update
