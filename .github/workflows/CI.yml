@@ -19,6 +19,12 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+      - name: Extract XML property
+        run: |
+          echo "Reading username from build.xml..."
+          USERNAME=$(xmllint --xpath "string(//property[@name='username']/@value)" build.xml)
+          echo "USERNAME=$USERNAME" >> $GITHUB_ENV
+          echo "Extracted USERNAME=$USERNAME"
 
       # Install Provar & Browsers and Run Tests
       - name: Run Build
