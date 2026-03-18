@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    env:
+      PROVAR_HOME: ${{ github.workspace }}/ProvarHome
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      # Install Provar & Browsers and Run Tests
+      - name: Run Build
+        run: |
+          mkdir -p $PROVAR_HOME
+
+          # Download Provar
+          curl -O https://download.provartesting.com/latest_V3/Provar_ANT_latest_V3.zip
+          unzip -o Provar_ANT_latest.zip -d $PROVAR_HOME
+          rm Provar_ANT_latest.zip
+
+          # Update system
+          sudo apt-get update
+
+          # Install Chrome
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list.d/google-chrome.list
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+
+          # Run Provar Tests
+          echo "PROVAR_HOME=$PROVAR_HOME"
+          cd $GITHUB_WORKSPACE/test/ANT
+          xvfb-run ant -f build.xml
+
+      # Upload Results (Always)
+      - name: Upload Execution Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Execution Report
+          path: ${{ github.workspace }}/test/ANT/Results/*
+
+      # Upload Results on Failure
+      - name: Upload Report on Failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Execution Report (Failure)
+          path: ${{ github.workspace }}/test/ANT/Results/*
